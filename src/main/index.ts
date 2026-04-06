@@ -1,6 +1,6 @@
 import { app, shell, BrowserWindow, ipcMain, Tray, Menu, nativeImage } from 'electron'
 import { join } from 'path'
-import { electronApp, optimizer, is } from '@electron-vite/utils'
+import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { VOCAL_FLOW_CONFIG } from '../common/vocalflow.config'
 
 // Services

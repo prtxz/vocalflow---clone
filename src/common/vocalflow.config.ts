@@ -1,13 +1,12 @@
 /**
  * VocalFlow Configuration
  * 
- * IMPORTANT: Hardcode your API keys here for the assignment.
  */
 
 export const VOCAL_FLOW_CONFIG = {
   // --- API KEYS ---
-  DEEPGRAM_API_KEY: 'YOUR_DEEPGRAM_API_KEY_HERE', 
-  GROQ_API_KEY: 'YOUR_GROQ_API_KEY_HERE',
+  DEEPGRAM_API_KEY: '3e24e17fd8ee0735556576d3d00bbe529272eb83', 
+  GROQ_API_KEY: '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',
 
   // --- MODELS ---
   DEEPGRAM_MODEL: 'nova-2',

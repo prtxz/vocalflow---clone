@@ -1,7 +1,7 @@
 {
-  "name": "vocal---clone",
+  "name": "vocalflow-windows-clone",
   "version": "1.0.0",
-  "description": "",
+  "description": "Windows clone of VocalFlow — Electron app with Deepgram STT, Groq LLM refinement, and global hotkey dictation",
   "type": "module",
   "main": "out/main/index.js",
   "scripts": {
@@ -15,23 +15,27 @@
   },
   "homepage": "https://github.com/prtxz/vocalflow---clone#readme",
   "devDependencies": {
+    "@electron-toolkit/preload": "^3.0.2",
+    "@electron-toolkit/utils": "^4.0.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^4.7.0",
     "electron": "^41.1.1",
-    "electron-vite": "^5.0.0",
+    "electron-vite": "^2.3.0",
     "typescript": "^6.0.2",
-    "vite": "^7.3.2"
+    "vite": "^5.4.21"
   },
   "dependencies": {
-    "@deepgram/sdk": "^5.0.0",
+    "@deepgram/sdk": "^3.13.0",
     "clipboardy": "^5.3.1",
     "cross-env": "^10.1.0",
     "groq-sdk": "^1.1.2",
     "lucide-react": "^1.7.0",
-    "node-global-key-listener": "^0.3.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "robotjs": "^0.7.0",
+    "sox-bin": "^1.1.0",
+    "uiohook-napi": "^1.5.5",
     "wait-on": "^9.0.4"
   }
 }

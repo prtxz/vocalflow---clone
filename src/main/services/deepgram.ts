@@ -34,7 +34,7 @@ export class DeepgramService extends EventEmitter {
 
   sendAudio(chunk: Buffer) {
     if (this.client) {
-      this.client.send(chunk)
+      this.client.send(chunk as any)
     }
   }
 
@@ -46,22 +46,44 @@ export class DeepgramService extends EventEmitter {
   }
 
   // --- BALANCE FEATURE ---
-  async getBalance() {
+  async getBalance(): Promise<{ amount: number | null; units: string; unavailable?: boolean }> {
     try {
-      // Per Deepgram docs: GET /v1/projects
-      // We assume the first project for this assignment
-      const { result, error } = await this.dgClient.manage.getProjects()
-      if (error) throw error
-      
-      const projectId = result.projects[0].project_id
-      const { result: balances, error: bError } = await this.dgClient.manage.getProjectBalances(projectId)
-      if (bError) throw bError
-      
+      const apiKey = VOCAL_FLOW_CONFIG.DEEPGRAM_API_KEY;
+      if (!apiKey) return { amount: null, units: 'USD', unavailable: true };
+
+      const headers = {
+        'Authorization': `Token ${apiKey}`,
+        'Content-Type': 'application/json'
+      };
+
+      // Fetch projects first
+      const projRes = await fetch('https://api.deepgram.com/v1/projects', { headers });
+      if (!projRes.ok) {
+        throw new Error(`Projects API returned ${projRes.status} ${projRes.statusText}`);
+      }
+      const projData = await projRes.json();
+      if (!projData.projects || projData.projects.length === 0) {
+        return { amount: null, units: 'USD', unavailable: true };
+      }
+
+      const projectId = projData.projects[0].project_id;
+
+      // Fetch balances for the project
+      const balRes = await fetch(`https://api.deepgram.com/v1/projects/${projectId}/balances`, { headers });
+      if (!balRes.ok) {
+        throw new Error(`Balances API returned ${balRes.status} ${balRes.statusText}`);
+      }
+      const balData = await balRes.json();
+
       // Usually returns an array of balances
-      return balances.balances[0] || { amount: 0, units: 'USD' }
-    } catch (err) {
-      console.error('Failed to fetch Deepgram balance:', err)
-      return { amount: 0, units: 'USD' }
+      const first = balData.balances?.[0];
+      if (!first) return { amount: null, units: 'USD', unavailable: true };
+      return { amount: first.amount ?? 0, units: first.units ?? 'USD' };
+    } catch (err: any) {
+      // This is expected when the API key doesn't have balance:read scope.
+      // Log the real reason so it shows in Electron's terminal for debugging.
+      console.log(`[Deepgram] Balance fetch unavailable: ${err?.message ?? err}`);
+      return { amount: null, units: 'USD', unavailable: true };
     }
   }
 }

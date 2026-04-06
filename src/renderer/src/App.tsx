@@ -3,7 +3,7 @@ import { Activity, Settings as SettingsIcon, Mic, X, Minus, Square, Info } from 
 
 // --- Types ---
 interface BalanceData {
-  deepgram: { amount: number; units: string }
+  deepgram: { amount: number | null; units: string; unavailable?: boolean }
   groq: { tokens: number; status: string }
 }
 
@@ -13,7 +13,7 @@ const App: React.FC = () => {
   const [partialTranscript, setPartialTranscript] = useState('')
   const [history, setHistory] = useState<string[]>([])
   const [balance, setBalance] = useState<BalanceData>({
-    deepgram: { amount: 0, units: 'USD' },
+    deepgram: { amount: null, units: 'USD', unavailable: true },
     groq: { tokens: 0, status: 'active' }
   })
 
@@ -114,12 +114,23 @@ const App: React.FC = () => {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                 <div className="balance-item">
                   <p style={{ color: '#9ca3af', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Deepgram Project Balance</p>
-                  <p style={{ fontSize: '1.8rem', fontWeight: 700, marginTop: '4px' }}>
-                    {balance.deepgram.units === 'USD' ? '$' : ''}{balance.deepgram.amount.toFixed(2)}
-                  </p>
-                  <div className="progress-bar" style={{ height: '4px', width: '100%', background: 'rgba(255,255,255,0.1)', borderRadius: '2px', marginTop: '10px' }}>
-                    <div style={{ width: `${Math.min(balance.deepgram.amount * 10, 100)}%`, height: '100%', background: '#3b82f6', borderRadius: '2px' }}></div>
-                  </div>
+                  {balance.deepgram.unavailable || balance.deepgram.amount === null ? (
+                    <>
+                      <p style={{ fontSize: '1.8rem', fontWeight: 700, marginTop: '4px', color: '#6b7280' }}>N/A</p>
+                      <p style={{ fontSize: '0.65rem', color: '#4b5563', marginTop: '6px', lineHeight: 1.4 }}>
+                        API key lacks billing scope. Check your Deepgram dashboard.
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <p style={{ fontSize: '1.8rem', fontWeight: 700, marginTop: '4px' }}>
+                        {balance.deepgram.units === 'USD' ? '$' : ''}{(balance.deepgram.amount as number).toFixed(2)}
+                      </p>
+                      <div className="progress-bar" style={{ height: '4px', width: '100%', background: 'rgba(255,255,255,0.1)', borderRadius: '2px', marginTop: '10px' }}>
+                        <div style={{ width: `${Math.min((balance.deepgram.amount as number) / 2, 100)}%`, height: '100%', background: '#3b82f6', borderRadius: '2px' }}></div>
+                      </div>
+                    </>
+                  )}
                 </div>
                 <div className="balance-item">
                   <p style={{ color: '#9ca3af', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Groq Refinement Status</p>

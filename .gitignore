@@ -19,3 +19,6 @@ reference-mac-os/
 # Build artifacts
 release/
 build/
+
+# Root-level debug/test scripts
+test-*.ts

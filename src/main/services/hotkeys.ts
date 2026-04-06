@@ -1,8 +1,7 @@
-import { GlobalKeyboardListener } from 'node-global-key-listener'
+import { uIOhook, UiohookKey } from 'uiohook-napi'
 import { VOCAL_FLOW_CONFIG } from '../../common/vocalflow.config'
 
 export class HotkeyService {
-  private vLog = new GlobalKeyboardListener()
   private isPressed = false
   private onHold: () => void
   private onRelease: () => void
@@ -12,25 +11,37 @@ export class HotkeyService {
     this.onRelease = onRelease
   }
 
+  private isTargetKey(keycode: number): boolean {
+    const target = VOCAL_FLOW_CONFIG.RECORD_HOTKEY.toLowerCase()
+    if (target === 'alt') return keycode === UiohookKey.Alt || keycode === UiohookKey.AltRight
+    if (target === 'control' || target === 'ctrl') return keycode === UiohookKey.Ctrl || keycode === UiohookKey.CtrlRight
+    if (target === 'shift') return keycode === UiohookKey.Shift || keycode === UiohookKey.ShiftRight
+    return false
+  }
+
   start() {
-    this.vLog.addListener((e, down) => {
-      // Logic for holding a specific modifier
-      // On Windows, Right Alt is often 'RIGHT ALT' or 'ALT GR'
-      const targetKey = VOCAL_FLOW_CONFIG.RECORD_HOTKEY.toUpperCase()
-      
-      if (e.name.includes(targetKey)) {
-        if (e.state === 'DOWN' && !this.isPressed) {
+    uIOhook.on('keydown', (e) => {
+      if (this.isTargetKey(e.keycode)) {
+        if (!this.isPressed) {
           this.isPressed = true
           this.onHold()
-        } else if (e.state === 'UP' && this.isPressed) {
+        }
+      }
+    })
+
+    uIOhook.on('keyup', (e) => {
+      if (this.isTargetKey(e.keycode)) {
+        if (this.isPressed) {
           this.isPressed = false
           this.onRelease()
         }
       }
     })
+
+    uIOhook.start()
   }
 
   stop() {
-    this.vLog.kill()
+    uIOhook.stop()
   }
 }
