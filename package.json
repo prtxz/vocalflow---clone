@@ -1,0 +1,35 @@
+{
+  "name": "vocal---clone",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "out/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "check": "tsc --noEmit"
+  },
+  "bugs": {
+    "url": "https://github.com/prtxz/vocalflow---clone/issues"
+  },
+  "homepage": "https://github.com/prtxz/vocalflow---clone#readme",
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "electron": "^41.1.1",
+    "electron-vite": "^5.0.0",
+    "typescript": "^6.0.2",
+    "vite": "^7.3.2"
+  },
+  "dependencies": {
+    "@deepgram/sdk": "^5.0.0",
+    "cross-env": "^10.1.0",
+    "groq-sdk": "^1.1.2",
+    "lucide-react": "^1.7.0",
+    "node-global-key-listener": "^0.3.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "wait-on": "^9.0.4"
+  }
+}
