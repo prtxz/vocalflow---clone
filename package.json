@@ -24,12 +24,14 @@
   },
   "dependencies": {
     "@deepgram/sdk": "^5.0.0",
+    "clipboardy": "^5.3.1",
     "cross-env": "^10.1.0",
     "groq-sdk": "^1.1.2",
     "lucide-react": "^1.7.0",
     "node-global-key-listener": "^0.3.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "robotjs": "^0.7.0",
     "wait-on": "^9.0.4"
   }
 }
