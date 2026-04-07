@@ -35,7 +35,7 @@ Hold a hotkey → speak → transcript is auto-pasted into any active window. Po
 ## Project Structure
 
 ```text
-vocal-clone/
+vocalflow---clone/
 ├── src/
 │   ├── common/
 │   │   └── vocalflow.config.ts    ← ⭐ Central config: API keys & settings
@@ -50,14 +50,17 @@ vocal-clone/
 │   ├── preload/
 │   │   └── index.ts               ← IPC bridge (main ↔ renderer)
 │   └── renderer/
+│       ├── index.html             ← App entry HTML
 │       └── src/
 │           ├── App.tsx            ← Dashboard UI (React)
 │           ├── main.tsx           ← Renderer entry point
 │           └── styles/
 │               └── globals.css    ← Glassmorphism design system
+├── sox_bin/                       ← Bundled SoX binary for Windows audio
 ├── electron.vite.config.ts
 ├── package.json
-└── tsconfig.json
+├── tsconfig.json
+└── README.md
 ```
 
 ---
