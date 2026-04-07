@@ -38,7 +38,7 @@ Hold a hotkey → speak → transcript is auto-pasted into any active window. Po
 vocalflow---clone/
 ├── src/
 │   ├── common/
-│   │   └── vocalflow.config.ts    ← ⭐ Central config: API keys & settings
+│   │   └── vocalflow.config.ts    ← Central config: API keys & settings
 │   ├── main/
 │   │   ├── index.ts               ← Electron main process orchestration
 │   │   └── services/
