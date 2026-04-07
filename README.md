@@ -130,7 +130,7 @@ npm run build
 ## Extra Features (Beyond Assignment)
 
 1. **Deepgram Balance Display** — Live project credit balance fetched from the Deepgram REST API every 30 seconds
-2. **Groq Activity Status** — Real-time LPU status indicator for the Groq API connection
+2. **Groq Token Usage Tracking** — Estimates tokens used per session in real-time, displayed in the dashboard
 3. **Graceful Error Handling** — API key scope errors are caught and displayed as "N/A" instead of crashing
 4. **Modular Service Architecture** — Clean separation: Audio → STT → LLM → Injection, each as an independent class
 5. **System Tray** — App minimizes to tray; never blocks your taskbar

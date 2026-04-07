@@ -22,3 +22,9 @@ build/
 
 # Root-level debug/test scripts
 test-*.ts
+
+# Submission ZIP (submit separately, don't commit)
+*.zip
+
+# macOS
+.DS_Store

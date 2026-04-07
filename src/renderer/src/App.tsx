@@ -124,7 +124,7 @@ const App: React.FC = () => {
                   ) : (
                     <>
                       <p style={{ fontSize: '1.8rem', fontWeight: 700, marginTop: '4px' }}>
-                        {balance.deepgram.units === 'USD' ? '$' : ''}{(balance.deepgram.amount as number).toFixed(2)}
+                        {balance.deepgram.units?.toUpperCase() === 'USD' ? '$' : ''}{(balance.deepgram.amount as number).toFixed(2)}
                       </p>
                       <div className="progress-bar" style={{ height: '4px', width: '100%', background: 'rgba(255,255,255,0.1)', borderRadius: '2px', marginTop: '10px' }}>
                         <div style={{ width: `${Math.min((balance.deepgram.amount as number) / 2, 100)}%`, height: '100%', background: '#3b82f6', borderRadius: '2px' }}></div>
@@ -133,11 +133,11 @@ const App: React.FC = () => {
                   )}
                 </div>
                 <div className="balance-item">
-                  <p style={{ color: '#9ca3af', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Groq Refinement Status</p>
+                  <p style={{ color: '#9ca3af', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Groq Tokens Used</p>
                   <p style={{ fontSize: '1.8rem', fontWeight: 700, marginTop: '4px', color: '#10b981' }}>
-                    {balance.groq.status.toUpperCase()}
+                    {balance.groq.tokens.toLocaleString()}
                   </p>
-                  <p style={{ fontSize: '0.7rem', color: '#9ca3af', marginTop: '4px' }}>Real-time LPU tracking active</p>
+                  <p style={{ fontSize: '0.7rem', color: '#9ca3af', marginTop: '4px' }}>Status: {balance.groq.status.toUpperCase()}</p>
                 </div>
               </div>
             </div>

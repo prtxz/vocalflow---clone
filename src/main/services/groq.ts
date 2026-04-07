@@ -10,6 +10,7 @@ export interface GroqOptions {
 
 export class GroqService {
   private groq = new Groq({ apiKey: VOCAL_FLOW_CONFIG.GROQ_API_KEY })
+  private totalTokensUsed = 0;
 
   async refineText(text: string, options: GroqOptions): Promise<string> {
     if (!text.trim()) return ''
@@ -48,6 +49,10 @@ export class GroqService {
         temperature: 0
       })
 
+      if (completion.usage) {
+        this.totalTokensUsed += completion.usage.total_tokens;
+      }
+
       return completion.choices[0]?.message?.content || text
     } catch (err) {
       console.error('Groq refinement error:', err)
@@ -56,13 +61,9 @@ export class GroqService {
   }
 
   // --- USAGE FEATURE ---
-  // Groq doesn't provide a public balance API for the free/metered tier in a single endpoint.
-  // We'll simulate usage tracking by logging tokens used.
   async getUsageEstimate() {
-    // This could also fetch usage stats from a local database if implemented. 
-    // For this assignment, we'll return a simulated object that shows "Monitoring"
     return {
-      tokens: 0, 
+      tokens: this.totalTokensUsed, 
       status: 'active'
     }
   }
